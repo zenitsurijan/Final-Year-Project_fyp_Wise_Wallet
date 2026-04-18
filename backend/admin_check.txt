@@ -1,0 +1,8 @@
+=== ADMIN ACCOUNT CHECK ===
+Name: System Admin
+Email: admin@wisewallet.com
+Role: admin
+isVerified: true
+
+=== ALL ADMIN ROLE ACCOUNTS ===
+System Admin | admin@wisewallet.com | role: admin | verified: true

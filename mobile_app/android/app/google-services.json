@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "949929162890",
+    "project_id": "wise-wallet-21789",
+    "storage_bucket": "wise-wallet-21789.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949929162890:android:dc9cb3074fa50210c0d573",
+        "android_client_info": {
+          "package_name": "com.example.auth_milestone_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv-Jd0wwA-8ZXZjGZKhAS4GCZZo8V4EO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

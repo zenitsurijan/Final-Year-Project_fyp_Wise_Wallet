@@ -1,0 +1,47 @@
+name: auth_milestone_app
+description: Standalone Flutter App for Auth Milestone
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  firebase_core: ^4.4.0
+  firebase_messaging: ^16.1.1
+  fl_chart: ^1.1.1
+  flutter:
+    sdk: flutter
+  flutter_image_compress: ^2.4.0
+  flutter_local_notifications: ^20.0.0
+  http: ^1.1.0
+  http_parser: ^4.1.2
+  image_picker: ^1.2.1
+  intl: ^0.20.2
+  path_provider: ^2.1.2
+  pdf: ^3.10.7
+  printing: ^5.11.1
+  provider: ^6.0.5
+  shared_preferences: ^2.2.1
+  shimmer: ^3.0.0
+  google_fonts: ^6.2.1
+  table_calendar: ^3.2.0
+  share_plus: ^10.1.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png"
+  remove_alpha_ios: true
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+

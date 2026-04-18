@@ -1,0 +1,45 @@
+﻿
+> auth-milestone-backend@1.0.0 start
+> node server.js
+
+Starting server...
+Imports loaded. Configuring dotenv...
+Setting up middleware...
+Setting up routes...
+Retrieved Config - PORT: 5002, MONGO_URI: mongodb://localhost:27017/auth_milestone
+Connecting to MongoDB...
+node.exe : 
+(node:22936) 
+[DEP0040] 
+DeprecationWarning: 
+The `punycode` 
+module is 
+deprecated. Please 
+use a userland 
+alternative instead.
+At C:\Program Files\n
+odejs\npm.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: ((node:2   
+ 2936) [D...nativ    
+e instead.:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+(Use `node 
+--trace-deprecation 
+...` to show where 
+the warning was 
+created)
+MongoDB Connected successfully
+GridFS Initialized
+Server running on port 5002
