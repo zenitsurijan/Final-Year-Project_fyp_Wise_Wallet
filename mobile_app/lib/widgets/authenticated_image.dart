@@ -1,8 +1,6 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import '../services/api_service.dart';
 
-class AuthenticatedImage extends StatefulWidget {
+class AuthenticatedImage extends StatelessWidget {
   final String imageId;
   final double? height;
   final double? width;
@@ -23,109 +21,46 @@ class AuthenticatedImage extends StatefulWidget {
   });
 
   @override
-  State<AuthenticatedImage> createState() => _AuthenticatedImageState();
-}
-
-class _AuthenticatedImageState extends State<AuthenticatedImage> {
-  Uint8List? _imageData;
-  bool _isLoading = true;
-  String? _error;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadImage();
-  }
-
-  @override
-  void didUpdateWidget(AuthenticatedImage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.imageId != widget.imageId) {
-      _loadImage();
-    }
-  }
-
-  Future<void> _loadImage() async {
-    if (!mounted) return;
-    setState(() {
-      _isLoading = true;
-      _error = null;
-    });
-
-    try {
-      final response = await ApiService.getImageWithAuth(widget.imageId);
-      if (!mounted) return;
-
-      if (response.statusCode == 200) {
-        setState(() {
-          _imageData = response.bodyBytes;
-          _isLoading = false;
-        });
-      } else {
-        setState(() {
-          _error = 'Failed to load image (${response.statusCode})';
-          _isLoading = false;
-        });
-      }
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        _error = e.toString();
-        _isLoading = false;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return widget.placeholder ??
-          Container(
-            height: widget.height ?? 200,
-            width: widget.width ?? double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
-            ),
-            child: const Center(child: CircularProgressIndicator()),
-          );
-    }
+    // Cloudinary URL directly use गर्छ
+    final String imageUrl = imageId.startsWith('http')
+        ? imageId
+        : 'https://res.cloudinary.com/de4fpkglc/image/upload/$imageId';
 
-    if (_error != null || _imageData == null) {
-      return widget.errorWidget ??
-          Container(
-            height: widget.height ?? 200,
-            width: widget.width ?? double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.broken_image, size: 48, color: Colors.grey),
-                  const SizedBox(height: 8),
-                  Text(_error ?? 'Failed to load image',
-                      style: const TextStyle(color: Colors.grey), textAlign: TextAlign.center),
-                ],
-              ),
-            ),
-          );
-    }
-
-    final image = Image.memory(
-      _imageData!,
-      height: widget.height,
-      width: widget.width,
-      fit: widget.fit,
+    final image = Image.network(
+      imageUrl,
+      height: height,
+      width: width,
+      fit: fit,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return placeholder ?? Container(
+          height: height ?? 200,
+          width: width ?? double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: borderRadius ?? BorderRadius.circular(8),
+          ),
+          child: const Center(child: CircularProgressIndicator()),
+        );
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return errorWidget ?? Container(
+          height: height ?? 200,
+          width: width ?? double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: borderRadius ?? BorderRadius.circular(8),
+          ),
+          child: const Center(
+            child: Icon(Icons.broken_image, size: 48, color: Colors.grey),
+          ),
+        );
+      },
     );
 
-    if (widget.borderRadius != null) {
-      return ClipRRect(
-        borderRadius: widget.borderRadius!,
-        child: image,
-      );
+    if (borderRadius != null) {
+      return ClipRRect(borderRadius: borderRadius!, child: image);
     }
 
     return image;
