@@ -3,3 +3,4 @@ backend/.env
 backend/uploads/
 mobile_app/build/
 mobile_app/.dart_tool/
+backend/tmp_db/

@@ -5,6 +5,7 @@ import '../../widgets/gradient_container.dart';
 import '../../widgets/custom_card.dart';
 import '../../widgets/amount_display.dart';
 import 'package:intl/intl.dart';
+import '../../services/pdf_report_service.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   final String userId;
@@ -58,6 +59,29 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     }
   }
 
+  Future<void> _downloadPdfReport() async {
+    if (_data == null) return;
+
+    try {
+      // Show loading indicator
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Generating PDF Report...'), duration: Duration(seconds: 2)),
+      );
+
+      await PdfReportService.generateUserReport(
+        user: _data!['user'],
+        stats: _data!['stats'],
+        transactions: _data!['recentTransactions'] as List,
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error generating PDF: $e'), backgroundColor: AppColors.error),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,6 +127,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         SliverAppBar(
           expandedHeight: 200,
           pinned: true,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.picture_as_pdf, color: Colors.white),
+              onPressed: _downloadPdfReport,
+              tooltip: 'Download Report',
+            ),
+            const SizedBox(width: 8),
+          ],
           flexibleSpace: FlexibleSpaceBar(
             title: Text(
               widget.userName,

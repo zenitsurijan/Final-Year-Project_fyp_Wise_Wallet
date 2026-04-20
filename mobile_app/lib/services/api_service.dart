@@ -2,18 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart'; // Add this import
 
-import 'package:flutter/foundation.dart';
 
 class ApiService {
   // --- Configure your Base URL here ---
-  static String get baseUrl {
-    if (kIsWeb) {
-      return 'http://localhost:5002/api';
-    } else {
-      // For Android Emulator, use http://10.0.2.2:5002/api
-      // For Physical Device, use your computer's Local IP (e.g., http://192.168.1.5:5002/api)
-      return 'http://192.168.100.190:5002/api';
-    }
+ static String get baseUrl {
+    // Development (USB) को लागि:
+   // return 'http://192.168.100.190:5002/api';
+    // Production (Internet) को लागि:
+   return 'https://final-year-project-fyp-wise-wallet.onrender.com/api';
   }
   
   static String get savingsUrl => '$baseUrl/savings';

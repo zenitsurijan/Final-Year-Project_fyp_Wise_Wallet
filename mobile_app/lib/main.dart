@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
@@ -49,6 +50,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
+    
+    // Enforce light status bar globally
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ));
     
     try {
       // For Web, Firebase initialization often requires options.
@@ -115,8 +123,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Wise Wallet',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: Consumer<AuthProvider>(
         builder: (context, auth, _) {
           return FutureBuilder<bool>(

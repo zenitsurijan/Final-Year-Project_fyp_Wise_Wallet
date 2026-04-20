@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
@@ -17,7 +18,7 @@ class AppColors {
   static const Color expense = Color(0xFFFF6B6B);
   
   // Background / Cards
-  static const Color background = Color(0xFFF8F9FA);
+  static const Color background = Color(0xFFFFFFFF); // Pure White as requested
   static const Color card = Color(0xFFFFFFFF);
   
   // Text
@@ -112,6 +113,7 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
+      brightness: Brightness.light,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primaryStart,
         primary: AppColors.primaryStart,
@@ -122,10 +124,12 @@ class AppTheme {
         onPrimary: Colors.white,
         onSurface: AppColors.textPrimary,
         onBackground: AppColors.textPrimary,
+        brightness: Brightness.light,
       ),
       scaffoldBackgroundColor: AppColors.background,
       cardTheme: CardThemeData(
         color: AppColors.card,
+        surfaceTintColor: Colors.transparent, // Move here to avoid tinting cards
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.medium),
@@ -185,8 +189,10 @@ class AppTheme {
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent, // Ensure no tint on AppBar
         elevation: 0,
         centerTitle: true,
+        systemOverlayStyle: SystemUiOverlayStyle.dark, // Dark icons for light background
         titleTextStyle: GoogleFonts.outfit(
           fontSize: 20,
           fontWeight: FontWeight.w600,
